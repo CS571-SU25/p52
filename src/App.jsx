@@ -6,6 +6,8 @@ import UserProfile from "./components/UserProfile";
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import CreateProfile from "./components/CreateProfile";
+import OffersPage from "./components/OffersPage";
+import SentOffers from "./components/SentOffers";
 
 export default function App() {
   return (
@@ -23,7 +25,9 @@ export default function App() {
           <Route path="/new" element={<NewItemForm />} />
           <Route path="/profile/:id" element={<UserProfile />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/offers" element={<OffersPage />} />
           <Route path="/profile/create" element={<CreateProfile />} />
+          <Route path="/offers/sent" element={<SentOffers />} />
         </Routes>
       </div>
     </HashRouter>

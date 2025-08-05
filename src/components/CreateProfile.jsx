@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useLogin } from "../LoginContext";
 
 const presetImages = [
-  "/img1.png",
-  "/img2.png",
-  "/img3.png"
+  "https://union.wisc.edu/sites/default/files/image/2024-05/rsz-terrace-2016-sw-1187-8-9-tonemapped__FillWzEyMDAsODAwXQ.jpg",
+  "https://upload.wikimedia.org/wikipedia/en/thumb/7/7c/BuckyBadger.svg/1200px-BuckyBadger.svg.png",
+  "https://tile.loc.gov/image-services/iiif/service:pnp:highsm:12400:12443/full/pct:50/0/default.jpg"
 ];
 
 export default function CreateProfile() {
@@ -14,6 +14,13 @@ export default function CreateProfile() {
   const [bio, setBio] = useState("");
   const [image, setImage] = useState(presetImages[0]);
   const [error, setError] = useState("");
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => setImage(reader.result);
+    if (file) reader.readAsDataURL(file);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,22 +38,26 @@ export default function CreateProfile() {
   };
 
   return (
-    <div className="container mt-4">
-      <h2>Create Profile</h2>
+    <div style={{ backgroundColor: '#d63c31', minHeight: '100vh', padding: '2rem' }}>
+    <div className="container mt-5 p-4 shadow" style={{ backgroundColor: "#fff", borderRadius: "10px" }}>
+      <h2 className="mb-4"> <strong>Create Profile</strong></h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label className="form-label">Username</label>
+          <label className="form-label"><strong>Username</strong></label>
           <input
             type="text"
             className="form-control"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => {
+              setUsername(e.target.value);
+              setError("");
+            }}
             required
           />
         </div>
 
         <div className="mb-3">
-          <label className="form-label">Password</label>
+          <label className="form-label"><strong>Password</strong></label>
           <input
             type="password"
             className="form-control"
@@ -57,7 +68,7 @@ export default function CreateProfile() {
         </div>
 
         <div className="mb-3">
-          <label className="form-label">Bio</label>
+          <label className="form-label"><strong>Bio</strong></label>
           <textarea
             className="form-control"
             rows="3"
@@ -68,24 +79,32 @@ export default function CreateProfile() {
 
         <div className="mb-3">
           <label className="form-label">Select a Profile Picture</label>
-          <div className="d-flex gap-3">
+          <div className="d-flex gap-3 flex-wrap align-items-center mb-2">
             {presetImages.map((img, idx) => (
               <img
                 key={idx}
                 src={img}
                 alt={`Preset ${idx}`}
                 onClick={() => setImage(img)}
-                style={{ border: image === img ? "2px solid blue" : "1px solid gray", width: 60, height: 60, cursor: "pointer" }}
+                style={{
+                  border: image === img ? "3px solid crimson" : "1px solid gray",
+                  width: 70,
+                  height: 70,
+                  objectFit: "cover",
+                  cursor: "pointer",
+                  borderRadius: "8px"
+                }}
               />
             ))}
+            <input type="file" accept="image/*" onChange={handleFileUpload} />
           </div>
         </div>
 
         {error && <div className="text-danger mb-3">{error}</div>}
-        <button type="submit" className="btn btn-primary">
-          Create
-        </button>
+
+        <button type="submit" className="btn btn-danger">Create</button>
       </form>
+    </div>
     </div>
   );
 }

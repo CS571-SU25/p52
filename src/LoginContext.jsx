@@ -1,31 +1,28 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useContext } from 'react';
 
-const LoginContext = createContext();
+export const LoginContext = createContext();
 
-const getStoredUsers = () => JSON.parse(localStorage.getItem("users")) || [];
-const storeUsers = (users) => localStorage.setItem("users", JSON.stringify(users));
-
-export function LoginProvider({ children }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(() => !!sessionStorage.getItem("user"));
-  const [user, setUser] = useState(() => JSON.parse(sessionStorage.getItem("user")) || null);
+export const LoginProvider = ({ children }) => {
+  const [user, setUser] = useState(() => {
+    const savedUser = sessionStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
 
   const login = (userData) => {
-    sessionStorage.setItem("user", JSON.stringify(userData));
     setUser(userData);
-    setIsLoggedIn(true);
+    sessionStorage.setItem("user", JSON.stringify(userData));
   };
 
   const logout = () => {
-    sessionStorage.removeItem("user");
     setUser(null);
-    setIsLoggedIn(false);
+    sessionStorage.removeItem("user");
   };
 
   return (
-    <LoginContext.Provider value={{ isLoggedIn, user, login, logout }}>
+    <LoginContext.Provider value={{ user, login, logout }}>
       {children}
     </LoginContext.Provider>
   );
-}
+};
 
 export const useLogin = () => useContext(LoginContext);
