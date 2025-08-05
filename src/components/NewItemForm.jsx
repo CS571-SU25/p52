@@ -64,6 +64,40 @@ export default function NewItemForm() {
       alert("Error saving item. Image may be too large.");
     }
   };
+  if (!user) {
+  return (
+    <div style={{ textAlign: "center", marginTop: "2rem" }}>
+      <h2>You must be logged in to list an item.</h2>
+      <button
+        style={{
+          margin: "1rem",
+          padding: "0.5rem 1rem",
+          backgroundColor: "#d32f2f",
+          color: "#fff",
+          border: "none",
+          borderRadius: "5px"
+        }}
+        onClick={() => navigate("/login")}
+      >
+        Login
+      </button>
+      <button
+        style={{
+          margin: "1rem",
+          padding: "0.5rem 1rem",
+          backgroundColor: "#2196f3",
+          color: "#fff",
+          border: "none",
+          borderRadius: "5px"
+        }}
+        onClick={() => navigate("/create-profile")}
+      >
+        Create Profile
+      </button>
+    </div>
+  );
+}
+
 
   return (
     <div style={{
@@ -129,5 +163,6 @@ export default function NewItemForm() {
         List Item
       </button>
     </div>
+    
   );
 }
