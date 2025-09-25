@@ -65,10 +65,11 @@ export default function Login() {
 
       <p className="mt-3 text-center">
         Don’t have an account?{" "}
-        <a href="#/create" style={{ textDecoration: "underline" }}>
+        <a href="#/profile/create" style={{ textDecoration: "underline" }}>
           Create one here
         </a>
-      </p>
+    </p>
+
     </div>
   );
 }

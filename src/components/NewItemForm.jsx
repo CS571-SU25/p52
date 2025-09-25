@@ -90,7 +90,7 @@ export default function NewItemForm() {
           border: "none",
           borderRadius: "5px"
         }}
-        onClick={() => navigate("/create-profile")}
+        onClick={() => navigate("/profile/create")}
       >
         Create Profile
       </button>
